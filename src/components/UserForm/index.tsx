@@ -1,11 +1,7 @@
 import { useForm } from 'react-hook-form';
 
 import * as SC from './style';
-
-type Inputs = {
-  email: string;
-  password: string;
-};
+import { IUserInfo } from '../types/types';
 
 interface IFormProps {
   onSubmit: () => void;
@@ -17,7 +13,7 @@ const UserForm = ({ onSubmit }: IFormProps) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>({ mode: 'onChange' });
+  } = useForm<IUserInfo>({ mode: 'onChange' });
 
   return (
     <SC.Wrapper onSubmit={handleSubmit(onSubmit)}>
