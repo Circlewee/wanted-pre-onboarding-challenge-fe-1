@@ -35,7 +35,7 @@ const LoginPage = () => {
   return (
     <SC.Wrapper>
       <SC.Title>로그인</SC.Title>
-      <UserForm onSubmit={loginSubmit} />
+      <UserForm onSubmit={loginSubmit} buttonText='로그인' />
       <SC.RegisterButton onClick={goRegister}>회원가입</SC.RegisterButton>
     </SC.Wrapper>
   );

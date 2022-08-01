@@ -4,10 +4,11 @@ import * as SC from './UserFormStyle';
 import { IUserInfo } from '@/types/types';
 
 interface IFormProps {
+  buttonText: string;
   onSubmit: (data: IUserInfo) => void;
 }
 
-const UserForm = ({ onSubmit }: IFormProps) => {
+const UserForm = ({ buttonText, onSubmit }: IFormProps) => {
   const {
     register,
     handleSubmit,
@@ -51,7 +52,7 @@ const UserForm = ({ onSubmit }: IFormProps) => {
         )}
       </SC.InputWrapper>
       <SC.LoginButton type='submit' disabled={!!errors.email || !!errors.password}>
-        로그인
+        {buttonText}
       </SC.LoginButton>
     </SC.Wrapper>
   );
