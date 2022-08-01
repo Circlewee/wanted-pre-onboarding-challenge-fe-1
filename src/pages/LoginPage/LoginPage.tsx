@@ -22,14 +22,12 @@ const LoginPage = () => {
       console.log('onMutate', variable);
     },
     onError: (error) => {
-      console.log('error', error);
       if (error.response) {
         setMessage(error.response.data.details);
         setShow(true);
       }
     },
     onSuccess: (response) => {
-      console.log('res', response);
       setMessage(response.message);
       setShow(true);
       localStorage.setItem('token', response.token);
@@ -44,6 +42,13 @@ const LoginPage = () => {
     navigate('/register');
   }
 
+  function handleConfirm() {
+    setShow(false);
+    if (isSuccess) {
+      navigate('/');
+    }
+  }
+
   useEffect(() => {
     if (localStorage.getItem('token')) navigate('/');
   }, []);
@@ -56,17 +61,7 @@ const LoginPage = () => {
         <SC.RegisterButton onClick={goRegister}>회원가입</SC.RegisterButton>
       </SC.Wrapper>
       {isLoading && <div>loading...</div>}
-      {isShow && (
-        <AlertModal
-          message={message}
-          handleConfirm={() => {
-            setShow(false);
-            if (isSuccess) {
-              navigate('/');
-            }
-          }}
-        />
-      )}
+      {isShow && <AlertModal message={message} handleConfirm={handleConfirm} />}
     </>
   );
 };

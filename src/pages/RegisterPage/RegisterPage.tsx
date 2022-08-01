@@ -38,6 +38,13 @@ const RegisterPage = () => {
     mutate(data);
   }
 
+  function handleConfirm() {
+    setShow(false);
+    if (isSuccess) {
+      navigate('/auth');
+    }
+  }
+
   return (
     <>
       <SC.Wrapper>
@@ -45,17 +52,7 @@ const RegisterPage = () => {
         <UserForm onSubmit={registerSubmit} buttonText='회원가입' />
       </SC.Wrapper>
       {isLoading && <div>loading...</div>}
-      {isShow && (
-        <AlertModal
-          message={message}
-          handleConfirm={() => {
-            setShow(false);
-            if (isSuccess) {
-              navigate('/auth');
-            }
-          }}
-        />
-      )}
+      {isShow && <AlertModal message={message} handleConfirm={handleConfirm} />}
     </>
   );
 };
