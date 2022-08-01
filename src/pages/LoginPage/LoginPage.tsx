@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import * as SC from './style';
+import * as SC from './LoginPageStyle';
 import { UserForm } from '@/components';
 import { loginRequest } from '@/lib/api';
 import { IUserInfo } from '@/types/types';

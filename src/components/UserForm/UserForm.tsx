@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 
-import * as SC from './style';
+import * as SC from './UserFormStyle';
 import { IUserInfo } from '@/types/types';
 
 interface IFormProps {
