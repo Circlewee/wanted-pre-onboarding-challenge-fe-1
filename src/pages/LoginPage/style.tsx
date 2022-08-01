@@ -9,3 +9,7 @@ export const Title = styled.p`
   font-size: 1.4rem;
   text-align: center;
 `;
+
+export const RegisterButton = styled.button`
+  font-size: 1.2rem;
+`;
