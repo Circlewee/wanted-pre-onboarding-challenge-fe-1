@@ -7,15 +7,17 @@ type Inputs = {
   password: string;
 };
 
-const UserForm = () => {
+interface IFormProps {
+  onSubmit: () => void;
+}
+
+const UserForm = ({ onSubmit }: IFormProps) => {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<Inputs>({ mode: 'onChange' });
-
-  function onSubmit() {}
 
   return (
     <SC.Wrapper onSubmit={handleSubmit(onSubmit)}>
