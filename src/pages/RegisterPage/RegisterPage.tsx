@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import * as SC from './RegisterPageStyle';
 import { registerRequest } from '@/lib/api';
 import { UserForm, AlertModal } from '@/components';
 import { IRequestError, IUserRequestSuccess, IUserInfo } from '@/types/types';
-import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
   const [isShow, setShow] = useState(false);

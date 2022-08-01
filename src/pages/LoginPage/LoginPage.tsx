@@ -1,43 +1,73 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { AxiosError } from 'axios';
 
 import * as SC from './LoginPageStyle';
-import { UserForm } from '@/components';
+import { UserForm, AlertModal } from '@/components';
 import { loginRequest } from '@/lib/api';
-import { IUserInfo } from '@/types/types';
+import { IUserInfo, IUserRequestSuccess, IRequestError } from '@/types/types';
 
 const LoginPage = () => {
+  const [isShow, setShow] = useState(false);
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  const loginMutation = useMutation(loginRequest, {
+
+  const { mutate, isLoading, isSuccess } = useMutation<
+    IUserRequestSuccess,
+    AxiosError<IRequestError>,
+    IUserInfo
+  >(loginRequest, {
     onMutate: (variable) => {
       console.log('onMutate', variable);
-      // variable : {loginId: 'xxx', password; 'xxx'}
     },
-    onError: (error, variable, context) => {
-      // error
+    onError: (error) => {
+      console.log('error', error);
+      if (error.response) {
+        setMessage(error.response.data.details);
+        setShow(true);
+      }
     },
-    onSuccess: (data, variables, context) => {
-      console.log('success', data, variables, context);
-    },
-    onSettled: () => {
-      console.log('end');
+    onSuccess: (response) => {
+      console.log('res', response);
+      setMessage(response.message);
+      setShow(true);
+      localStorage.setItem('token', response.token);
     },
   });
 
   function loginSubmit(data: IUserInfo) {
-    loginMutation.mutate(data);
+    mutate(data);
   }
 
   function goRegister() {
     navigate('/register');
   }
 
+  useEffect(() => {
+    if (localStorage.getItem('token')) navigate('/');
+  }, []);
+
   return (
-    <SC.Wrapper>
-      <SC.Title>로그인</SC.Title>
-      <UserForm onSubmit={loginSubmit} buttonText='로그인' />
-      <SC.RegisterButton onClick={goRegister}>회원가입</SC.RegisterButton>
-    </SC.Wrapper>
+    <>
+      <SC.Wrapper>
+        <SC.Title>로그인</SC.Title>
+        <UserForm onSubmit={loginSubmit} buttonText='로그인' />
+        <SC.RegisterButton onClick={goRegister}>회원가입</SC.RegisterButton>
+      </SC.Wrapper>
+      {isLoading && <div>loading...</div>}
+      {isShow && (
+        <AlertModal
+          message={message}
+          handleConfirm={() => {
+            setShow(false);
+            if (isSuccess) {
+              navigate('/');
+            }
+          }}
+        />
+      )}
+    </>
   );
 };
 
