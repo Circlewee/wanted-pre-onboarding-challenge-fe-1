@@ -4,7 +4,7 @@ import { UserForm } from '@/components';
 const LoginPage = () => {
   return (
     <SC.Wrapper>
-      로그인
+      <SC.Title>로그인</SC.Title>
       <UserForm />
       <SC.LoginButton>Login</SC.LoginButton>
     </SC.Wrapper>

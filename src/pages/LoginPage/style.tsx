@@ -1,11 +1,18 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  width: 300px;
+
+  > * + * {
+    margin-top: 2rem;
+  }
 `;
 
-export const LoginButton = styled.button``;
+export const Title = styled.p`
+  margin: 0;
+  font-size: 1.4rem;
+`;
+
+export const LoginButton = styled.button`
+  font-size: 1.2rem;
+`;

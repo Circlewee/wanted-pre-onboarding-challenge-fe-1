@@ -1,9 +1,11 @@
+import * as SC from './style';
+
 const UserForm = () => {
   return (
-    <div>
-      <input type='text' placeholder='email' />
-      <input type='text' placeholder='password' />
-    </div>
+    <SC.Wrapper>
+      <SC.Input type='text' placeholder='email' />
+      <SC.Input type='password' placeholder='password' />
+    </SC.Wrapper>
   );
 };
 
