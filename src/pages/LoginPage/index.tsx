@@ -6,7 +6,6 @@ const LoginPage = () => {
     <SC.Wrapper>
       <SC.Title>로그인</SC.Title>
       <UserForm />
-      <SC.LoginButton>Login</SC.LoginButton>
     </SC.Wrapper>
   );
 };
