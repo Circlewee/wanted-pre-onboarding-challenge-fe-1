@@ -25,7 +25,11 @@ export const Label = styled.label`
 `;
 
 export const LoginButton = styled.button<{ disabled: boolean }>`
+  width: 100%;
   margin-top: 2rem;
+  padding: 5px 0;
+  border: 3px solid #000;
+  border-radius: 20px;
   font-size: 1.2rem;
 
   ${(props) =>
