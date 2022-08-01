@@ -1,7 +1,63 @@
+import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+
 import * as SC from './RegisterPageStyle';
+import { registerRequest } from '@/lib/api';
+import { UserForm, AlertModal } from '@/components';
+import { IRequestError, IUserRequestSuccess, IUserInfo } from '@/types/types';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
-  return <SC.Wrapper>Register!</SC.Wrapper>;
+  const [isShow, setShow] = useState(false);
+  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
+
+  const { mutate, isLoading, isSuccess } = useMutation<
+    IUserRequestSuccess,
+    AxiosError<IRequestError>,
+    IUserInfo
+  >(registerRequest, {
+    onMutate: (variable) => {
+      console.log('onMutate', variable);
+    },
+    onError: (error) => {
+      console.log('error', error);
+      if (error.response) {
+        setMessage(error.response.data.details);
+        setShow(true);
+      }
+    },
+    onSuccess: (response) => {
+      setMessage(response.message);
+      setShow(true);
+    },
+  });
+
+  function registerSubmit(data: IUserInfo) {
+    mutate(data);
+  }
+
+  return (
+    <>
+      <SC.Wrapper>
+        <SC.Title>회원가입</SC.Title>
+        <UserForm onSubmit={registerSubmit} buttonText='회원가입' />
+      </SC.Wrapper>
+      {isLoading && <div>loading...</div>}
+      {isShow && (
+        <AlertModal
+          message={message}
+          handleConfirm={() => {
+            setShow(false);
+            if (isSuccess) {
+              navigate('/auth');
+            }
+          }}
+        />
+      )}
+    </>
+  );
 };
 
 export default RegisterPage;

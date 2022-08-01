@@ -1,6 +1,13 @@
-interface IUserInfo {
+export interface IUserInfo {
   email: string;
   password: string;
 }
 
-export type { IUserInfo };
+export interface IUserRequestSuccess {
+  message: string;
+  token: string;
+}
+
+export interface IRequestError {
+  details: string;
+}
