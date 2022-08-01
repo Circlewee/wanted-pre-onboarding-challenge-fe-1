@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
 
 import * as SC from './style';
-import { IUserInfo } from '../types/types';
+import { IUserInfo } from '@/types/types';
 
 interface IFormProps {
-  onSubmit: () => void;
+  onSubmit: (data: IUserInfo) => void;
 }
 
 const UserForm = ({ onSubmit }: IFormProps) => {
