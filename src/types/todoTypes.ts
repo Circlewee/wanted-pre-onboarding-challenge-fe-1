@@ -1,6 +1,9 @@
-export interface ITodo {
+export interface IFormType {
   title: string;
   content: string;
+}
+
+export interface ITodo extends IFormType {
   id: string;
   createdAt: string;
   updatedAt: string;
