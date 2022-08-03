@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  width: 50rem;
-  display: flex;
-
-  > * {
-    width: 50%;
-  }
-`;
-
-export const TodoForm = styled.form`
+export const Form = styled.form`
   display: flex;
   flex-direction: column;
 
