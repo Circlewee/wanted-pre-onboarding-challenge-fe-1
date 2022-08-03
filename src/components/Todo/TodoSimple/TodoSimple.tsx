@@ -5,10 +5,11 @@ import { ITodo } from '@/types/todoTypes';
 
 interface ITodoSimpleProps {
   todo: ITodo;
+  active: boolean;
   deleteRequest: (id: string) => void;
 }
 
-const TodoSimple = ({ todo, deleteRequest }: ITodoSimpleProps) => {
+const TodoSimple = ({ todo, active, deleteRequest }: ITodoSimpleProps) => {
   const navigate = useNavigate();
 
   function handleDelete() {
@@ -16,12 +17,14 @@ const TodoSimple = ({ todo, deleteRequest }: ITodoSimpleProps) => {
   }
 
   function goDetail() {
-    navigate(`/${todo.id}`);
+    if (!active) {
+      navigate(`/${todo.id}`);
+    }
   }
 
   return (
     <SC.Wrapper>
-      <SC.Todo onClick={goDetail}>
+      <SC.Todo onClick={goDetail} active={active}>
         {todo.title}: {todo.content}
       </SC.Todo>
       <button>📝</button>

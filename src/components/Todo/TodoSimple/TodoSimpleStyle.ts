@@ -6,6 +6,8 @@ export const Wrapper = styled.li`
   }
 `;
 
-export const Todo = styled.span`
-  cursor: pointer;
+export const Todo = styled.span<{ active: boolean }>`
+  padding: 3px;
+  border-bottom: 1px solid ${(props) => (props.active ? '#000' : '#fff')};
+  cursor: ${(props) => (props.active ? 'default' : 'pointer')};
 `;

@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import * as SC from './TodoListStyle';
 import { getTodoList, postTodo, deleteTodo } from '@/lib/api';
@@ -11,6 +11,8 @@ import TodoForm from '../TodoForm/TodoForm';
 
 const TodoList = () => {
   const navigate = useNavigate();
+  const params = useParams();
+
   const queryClient = useQueryClient();
   const { data } = useQuery(['todoList'], getTodoList, {
     staleTime: 5000,
@@ -57,7 +59,14 @@ const TodoList = () => {
       <div>
         <h2>TODO List</h2>
         {data?.data.map((todo) => {
-          return <TodoSimple key={todo.id} todo={todo} deleteRequest={deleteRequest} />;
+          return (
+            <TodoSimple
+              key={todo.id}
+              todo={todo}
+              active={params['*'] === todo.id}
+              deleteRequest={deleteRequest}
+            />
+          );
         })}
       </div>
       <TodoForm request={postRequest} title='ADD TODO' />
