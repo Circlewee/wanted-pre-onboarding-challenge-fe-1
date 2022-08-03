@@ -18,7 +18,7 @@ const TodoList = () => {
     onError(error, variables, context) {
       console.log(error);
     },
-    onSuccess(_, variables) {
+    onSuccess(todo) {
       /* setQueryData와 invalidateQueries는 같은 기능을 한다.
        * 다만 invalidateQueries는 적은 코드, 요청 1회 추가
        * setQueryData는 좀 더 많은 코드, 요청 없음, 응답으로 필드를 컨트롤 할 수 있음 이라는 차이점이 있다 */
@@ -26,9 +26,9 @@ const TodoList = () => {
         ['todoList'],
         (old: ITodoListResponse | undefined): ITodoListResponse => {
           if (old) {
-            return { data: [...old.data, variables] };
+            return { data: [...old.data, todo.data] };
           }
-          return { data: [variables] };
+          return { data: [todo.data] };
         }
       );
     },
