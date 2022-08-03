@@ -15,7 +15,7 @@ const App = () => {
     <BrowserRouter>
       <div style={style}>
         <Routes>
-          <Route path='/' element={<TodoPage />} />
+          <Route path='/*' element={<TodoPage />} />
           <Route path='/auth' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path='*' element={<div>404 NOT FOUND!</div>} />

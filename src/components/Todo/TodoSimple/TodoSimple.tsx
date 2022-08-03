@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import * as SC from './TodoSimpleStyle';
 import { ITodo } from '@/types/todoTypes';
 
@@ -7,13 +9,22 @@ interface ITodoSimpleProps {
 }
 
 const TodoSimple = ({ todo, deleteRequest }: ITodoSimpleProps) => {
+  const navigate = useNavigate();
+
   function handleDelete() {
     deleteRequest(todo.id);
   }
 
+  function goDetail() {
+    navigate(`/${todo.id}`);
+  }
+
   return (
     <SC.Wrapper>
-      {todo.title}: {todo.content} <button>📝</button>
+      <SC.Todo onClick={goDetail}>
+        {todo.title}: {todo.content}
+      </SC.Todo>
+      <button>📝</button>
       <button onClick={handleDelete}>❌</button>
     </SC.Wrapper>
   );
