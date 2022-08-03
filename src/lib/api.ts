@@ -44,6 +44,17 @@ export async function getTodoList(): Promise<ITodoListResponse> {
   return data;
 }
 
+export async function getTodoById(id: string): Promise<ITodoResponse> {
+  const token = localStorage.getItem('token');
+  const { data } = await customAxios.get<ITodoResponse>(`/todos/${id}`, {
+    headers: {
+      Authorization: token ?? '',
+    },
+  });
+
+  return data;
+}
+
 export async function postTodo(todo: ITodo): Promise<ITodoResponse> {
   const token = localStorage.getItem('token');
   const { data } = await customAxios.post<ITodoResponse>('/todos', todo, {
@@ -55,7 +66,13 @@ export async function postTodo(todo: ITodo): Promise<ITodoResponse> {
   return data;
 }
 
-export async function updateTodo(id: string, todo: ITodo): Promise<ITodoResponse> {
+export async function updateTodo({
+  id,
+  todo,
+}: {
+  id: string;
+  todo: ITodo;
+}): Promise<ITodoResponse> {
   const token = localStorage.getItem('token');
   const { data } = await customAxios.put<ITodoResponse>(`/todos/${id}`, todo, {
     headers: {
