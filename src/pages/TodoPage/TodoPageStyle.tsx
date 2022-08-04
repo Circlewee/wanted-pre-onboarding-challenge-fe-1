@@ -1,3 +1,5 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div``;
+export const HomeButton = styled.button`
+  font-size: 1.4rem;
+`;

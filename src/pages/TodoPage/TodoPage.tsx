@@ -1,7 +1,9 @@
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Suspense } from 'react';
 
 import * as SC from './TodoPageStyle';
 import { Todo } from '@/components';
+import Loading from '@/components/Loading/Loading';
 
 const TodoPage = () => {
   const navigate = useNavigate();
@@ -11,15 +13,22 @@ const TodoPage = () => {
   }
 
   return (
-    <SC.Wrapper>
+    <div>
       <h1>
-        TODO with React Query <button onClick={goHome}>🏠</button>
+        TODO with React Query <SC.HomeButton onClick={goHome}>🏠</SC.HomeButton>
       </h1>
       <Todo.TodoList />
       <Routes>
-        <Route path=':todoId' element={<Todo.TodoDetail />} />
+        <Route
+          path=':todoId'
+          element={
+            <Suspense fallback={<Loading />}>
+              <Todo.TodoDetail />
+            </Suspense>
+          }
+        />
       </Routes>
-    </SC.Wrapper>
+    </div>
   );
 };
 
