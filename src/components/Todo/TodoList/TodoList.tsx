@@ -44,9 +44,9 @@ const TodoList = () => {
   });
 
   const deleteMutation = useMutation(deleteTodo, {
-    onSuccess() {
+    onSuccess(data) {
       refetch();
-      navigate('/');
+      if (data === params['*']) navigate('/');
     },
   });
 
