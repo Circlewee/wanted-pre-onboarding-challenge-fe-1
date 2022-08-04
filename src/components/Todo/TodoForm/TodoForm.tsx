@@ -38,8 +38,10 @@ const TodoForm = (props: IFormProps) => {
         defaultValue={props.default?.content}
         {...register('content', { required: true })}
       />
-      <SC.PostButton type='submit'>추가</SC.PostButton>
-      {props.cancelUpdate && <SC.PostButton onClick={props.cancelUpdate}>취소</SC.PostButton>}
+      <div>
+        <SC.ActionButton type='submit'>추가</SC.ActionButton>
+        {props.cancelUpdate && <SC.ActionButton onClick={props.cancelUpdate}>취소</SC.ActionButton>}
+      </div>
     </SC.Form>
   );
 };

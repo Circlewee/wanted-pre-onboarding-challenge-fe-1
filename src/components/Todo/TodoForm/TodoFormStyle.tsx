@@ -7,6 +7,11 @@ export const Form = styled.form`
   * + * {
     margin-top: 2rem;
   }
+
+  > div {
+    display: flex;
+    align-self: flex-end;
+  }
 `;
 
 export const TodoInput = styled.input`
@@ -15,7 +20,15 @@ export const TodoInput = styled.input`
   font-size: 1.2rem;
 `;
 
-export const PostButton = styled.button`
-  align-self: flex-end;
+export const ActionButton = styled.button`
+  margin: 0;
+  padding: 8px 12px;
+  background-color: #000;
   font-size: 1.1rem;
+  color: #fff;
+  border-radius: 20px;
+
+  & + & {
+    margin-left: 10px;
+  }
 `;
