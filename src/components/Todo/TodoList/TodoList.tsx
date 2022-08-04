@@ -20,7 +20,7 @@ const TodoList = () => {
   });
 
   const postMutation = useMutation<ITodoResponse, AxiosError<IRequestError>, IFormType>(postTodo, {
-    onError(error, variables, context) {
+    onError(error) {
       alert(error);
     },
     onSuccess(response) {

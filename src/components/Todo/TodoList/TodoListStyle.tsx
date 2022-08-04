@@ -9,15 +9,6 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const TodoForm = styled.form`
-  display: flex;
-  flex-direction: column;
-
-  * + * {
-    margin-top: 2rem;
-  }
-`;
-
 export const TodoInput = styled.input`
   padding: 8px 10px;
   border-bottom: 1px solid #000;
