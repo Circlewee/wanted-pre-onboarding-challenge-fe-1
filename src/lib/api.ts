@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 import { IUserRequestSuccess, IUserInfo, IRequestError } from '@/types/types';
-import { ITodo, ITodoListResponse, ITodoResponse } from '@/types/todoTypes';
+import { IFormType, ITodoListResponse, ITodoResponse } from '@/types/todoTypes';
 
 const customAxios = axios.create({
   baseURL: 'http://localhost:8080',
@@ -11,12 +11,10 @@ customAxios.interceptors.response.use(
   (response) => response,
   (error: AxiosError<IRequestError>) => {
     if (error.response?.status === 400) {
-      localStorage.removeItem('token');
-      alert('접근 권한이 없습니다. 로그인 화면으로 이동합니다.');
-      window.location.href = '/auth';
+      alert(error.response.data.details);
+      // token 걸러내기 필요
       return Promise.reject(error);
     }
-
     return Promise.reject(error);
   }
 );
@@ -44,7 +42,11 @@ export async function getTodoList(): Promise<ITodoListResponse> {
   return data;
 }
 
-export async function getTodoById(id: string): Promise<ITodoResponse> {
+export async function getTodoById(id: string | undefined): Promise<ITodoResponse> {
+  if (!id) {
+    throw new Error('존재하지 않는 Todo입니다.');
+  }
+
   const token = localStorage.getItem('token');
   const { data } = await customAxios.get<ITodoResponse>(`/todos/${id}`, {
     headers: {
@@ -55,7 +57,7 @@ export async function getTodoById(id: string): Promise<ITodoResponse> {
   return data;
 }
 
-export async function postTodo(todo: ITodo): Promise<ITodoResponse> {
+export async function postTodo(todo: IFormType): Promise<ITodoResponse> {
   const token = localStorage.getItem('token');
   const { data } = await customAxios.post<ITodoResponse>('/todos', todo, {
     headers: {
@@ -71,7 +73,7 @@ export async function updateTodo({
   todo,
 }: {
   id: string;
-  todo: ITodo;
+  todo: IFormType;
 }): Promise<ITodoResponse> {
   const token = localStorage.getItem('token');
   const { data } = await customAxios.put<ITodoResponse>(`/todos/${id}`, todo, {
