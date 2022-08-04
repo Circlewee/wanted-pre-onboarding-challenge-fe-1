@@ -15,5 +15,10 @@ export const TodoContent = styled.article`
 `;
 
 export const UpdateButton = styled.button`
+  margin-block: auto;
   font-size: 1.2rem;
+`;
+
+export const Date = styled.p`
+  margin: 0;
 `;

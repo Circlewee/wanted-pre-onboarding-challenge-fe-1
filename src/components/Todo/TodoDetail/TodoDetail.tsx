@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import * as SC from './TodoDetailStyle';
 import { updateTodo, getTodoById } from '@/lib/api';
+import getDateString from '@/lib/getDateString';
 import { IFormType } from '@/types/todoTypes';
 import TodoForm from '../TodoForm/TodoForm';
 
@@ -46,10 +47,13 @@ const TodoDetail = () => {
     <SC.Wrapper>
       {!updateMode ? (
         <>
-          <h2>제목: {data?.data.title}</h2>
           <div>
-            <SC.TodoContent>할일: {data?.data.content}</SC.TodoContent>
+            <h2>{data?.data.title}</h2>
             <SC.UpdateButton onClick={setMode}>📝</SC.UpdateButton>
+          </div>
+          <div>
+            <SC.TodoContent>{data?.data.content}</SC.TodoContent>
+            <SC.Date>{getDateString(data?.data.createdAt)}</SC.Date>
           </div>
         </>
       ) : (
