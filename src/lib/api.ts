@@ -10,9 +10,16 @@ const customAxios = axios.create({
 customAxios.interceptors.response.use(
   (response) => response,
   (error: AxiosError<IRequestError>) => {
-    if (error.response?.status === 400) {
-      alert(error.response.data.details);
-      // token 걸러내기 필요
+    const message = error.response?.data.details;
+    if (message) {
+      alert(message);
+      // 적절한 방법은 아니지만 react-router에서 제공하는 커스텀 훅을 사용할 수 없으므로 임시처리함
+      if (message === 'Token is missing') {
+        window.location.href = '/auth';
+      } else {
+        window.location.href = '/';
+      }
+
       return Promise.reject(error);
     }
     return Promise.reject(error);
