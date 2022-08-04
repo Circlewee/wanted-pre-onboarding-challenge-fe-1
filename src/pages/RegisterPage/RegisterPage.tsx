@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import * as SC from './RegisterPageStyle';
 import { registerRequest } from '@/lib/api';
-import { UserForm, AlertModal } from '@/components';
+import { UserForm, AlertModal, Loading } from '@/components';
 import { IRequestError, IUserRequestSuccess, IUserInfo } from '@/types/types';
 
 const RegisterPage = () => {
@@ -51,7 +51,7 @@ const RegisterPage = () => {
         <SC.Title>회원가입</SC.Title>
         <UserForm onSubmit={registerSubmit} buttonText='회원가입' />
       </SC.Wrapper>
-      {isLoading && <div>loading...</div>}
+      {isLoading && <Loading />}
       {isShow && <AlertModal message={message} handleConfirm={handleConfirm} />}
     </>
   );

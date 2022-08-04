@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { AxiosError } from 'axios';
 
 import * as SC from './LoginPageStyle';
-import { UserForm, AlertModal } from '@/components';
+import { UserForm, AlertModal, Loading } from '@/components';
 import { loginRequest } from '@/lib/api';
 import { IUserInfo, IUserRequestSuccess, IRequestError } from '@/types/types';
 
