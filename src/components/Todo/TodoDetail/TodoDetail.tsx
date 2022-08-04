@@ -46,9 +46,11 @@ const TodoDetail = () => {
     <SC.Wrapper>
       {!updateMode ? (
         <>
-          <SC.TodoTitle>{data?.data.title}</SC.TodoTitle>
-          <SC.TodoContent>{data?.data.content}</SC.TodoContent>
-          <button onClick={setMode}>📝</button>
+          <h2>제목: {data?.data.title}</h2>
+          <div>
+            <SC.TodoContent>할일: {data?.data.content}</SC.TodoContent>
+            <SC.UpdateButton onClick={setMode}>📝</SC.UpdateButton>
+          </div>
         </>
       ) : (
         <TodoForm
