@@ -27,7 +27,6 @@ const TodoSimple = ({ todo, active, deleteRequest }: ITodoSimpleProps) => {
       <SC.Todo onClick={goDetail} active={active}>
         {todo.title}: {todo.content}
       </SC.Todo>
-      <button>📝</button>
       <button onClick={handleDelete}>❌</button>
     </SC.Wrapper>
   );
