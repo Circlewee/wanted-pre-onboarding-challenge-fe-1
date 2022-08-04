@@ -85,15 +85,15 @@ export async function updateTodo({
   return data;
 }
 
-export async function deleteTodo(id: string) {
+export async function deleteTodo(id: string): Promise<string> {
   const token = localStorage.getItem('token');
-  const { data } = await customAxios.delete(`/todos/${id}`, {
+  await customAxios.delete(`/todos/${id}`, {
     headers: {
       Authorization: token ?? '',
     },
   });
 
-  return data;
+  return id;
 }
 
 export default customAxios;
