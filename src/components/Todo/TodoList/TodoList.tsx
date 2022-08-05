@@ -62,16 +62,20 @@ const TodoList = () => {
     <SC.Wrapper>
       <div>
         <h2>TODO List</h2>
-        {data?.data.map((todo) => {
-          return (
-            <TodoSimple
-              key={todo.id}
-              todo={todo}
-              active={params['*'] === todo.id}
-              deleteRequest={deleteRequest}
-            />
-          );
-        })}
+        {data?.data.length !== 0 ? (
+          data?.data.map((todo) => {
+            return (
+              <TodoSimple
+                key={todo.id}
+                todo={todo}
+                active={params['*'] === todo.id}
+                deleteRequest={deleteRequest}
+              />
+            );
+          })
+        ) : (
+          <p>TODO가 없습니다. 오른쪽에서 추가해보세요!</p>
+        )}
       </div>
       <TodoForm request={postRequest} title='ADD TODO' />
     </SC.Wrapper>
