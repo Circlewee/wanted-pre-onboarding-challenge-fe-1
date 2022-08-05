@@ -2,6 +2,8 @@ import axios, { AxiosError } from 'axios';
 
 import { IUserRequestSuccess, IUserInfo, IRequestError } from '@/types/types';
 import { IFormType, ITodoListResponse, ITodoResponse } from '@/types/todoTypes';
+import useToast from '@/hooks/useToast';
+import { createBrowserHistory } from 'history';
 
 const customAxios = axios.create({
   baseURL: 'http://localhost:8080',
@@ -10,14 +12,13 @@ const customAxios = axios.create({
 customAxios.interceptors.response.use(
   (response) => response,
   (error: AxiosError<IRequestError>) => {
+    const toast = useToast();
+    const history = createBrowserHistory();
     const message = error.response?.data.details;
     if (message) {
-      alert(message);
-      // 적절한 방법은 아니지만 react-router에서 제공하는 커스텀 훅을 사용할 수 없으므로 임시처리함
-      if (message === 'Token is missing') {
-        window.location.href = '/auth';
-      } else {
-        window.location.href = '/';
+      if (message === 'Token is missing' || message === '로그인에 실패했습니다') {
+        toast.error(message);
+        history.push('/auth');
       }
 
       return Promise.reject(error);
