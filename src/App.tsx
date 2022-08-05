@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import styled from 'styled-components';
 
@@ -16,7 +15,6 @@ const PageWrapper = styled.div`
 const App = () => {
   return (
     <BrowserRouter>
-      <ToastContainer />
       <PageWrapper>
         <Routes>
           <Route path='/*' element={<TodoPage />} />
