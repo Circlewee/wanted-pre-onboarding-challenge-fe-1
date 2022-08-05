@@ -60,7 +60,7 @@ const LoginPage = () => {
         <UserForm onSubmit={loginSubmit} buttonText='로그인' />
         <SC.RegisterButton onClick={goRegister}>회원가입</SC.RegisterButton>
       </SC.Wrapper>
-      {isLoading && <div>loading...</div>}
+      {isLoading && <Loading />}
       {isShow && <AlertModal message={message} handleConfirm={handleConfirm} />}
     </>
   );
