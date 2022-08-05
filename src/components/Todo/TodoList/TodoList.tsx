@@ -8,10 +8,12 @@ import { IRequestError } from '@/types/types';
 import { IFormType, ITodoResponse } from '@/types/todoTypes';
 import TodoSimple from '../TodoSimple/TodoSimple';
 import TodoForm from '../TodoForm/TodoForm';
+import useToast from '@/hooks/useToast';
 
 const TodoList = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const toast = useToast();
 
   // const queryClient = useQueryClient();
   const { data, refetch } = useQuery(['todoList'], getTodoList, {
@@ -21,7 +23,11 @@ const TodoList = () => {
 
   const postMutation = useMutation<ITodoResponse, AxiosError<IRequestError>, IFormType>(postTodo, {
     onError(error) {
-      alert(error);
+      if (error.response) {
+        toast.error(error.response.data.details);
+      } else {
+        toast.error('Todo 등록을 실패했습니다.');
+      }
     },
     onSuccess(response) {
       /* setQueryData와 invalidateQueries는 같은 기능을 한다.
@@ -38,13 +44,22 @@ const TodoList = () => {
       //     return { data: [response.data] };
       //   }
       // );
+      toast.success('Todo 등록을 성공했습니다!');
       refetch();
       navigate(`/${response.data.id}`);
     },
   });
 
-  const deleteMutation = useMutation(deleteTodo, {
+  const deleteMutation = useMutation<string, AxiosError<IRequestError>, string>(deleteTodo, {
+    onError(error) {
+      if (error.response) {
+        toast.error(error.response.data.details);
+      } else {
+        toast.error('Todo 삭제를 실패했습니다.');
+      }
+    },
     onSuccess(data) {
+      toast.success('Todo 삭제를 성공했습니다!');
       refetch();
       if (data === params['*']) navigate('/');
     },

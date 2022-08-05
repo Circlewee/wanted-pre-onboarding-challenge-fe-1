@@ -6,11 +6,13 @@ import * as SC from './TodoDetailStyle';
 import { updateTodo, getTodoById } from '@/lib/api';
 import getDateString from '@/lib/getDateString';
 import { IFormType } from '@/types/todoTypes';
+import useToast from '@/hooks/useToast';
 import TodoForm from '../TodoForm/TodoForm';
 
 const TodoDetail = () => {
   const [updateMode, setUpdateMode] = useState(false);
   const { todoId } = useParams();
+  const { success } = useToast();
 
   const { data, refetch } = useQuery(['todo'], () => {
     return getTodoById(todoId);
@@ -20,6 +22,7 @@ const TodoDetail = () => {
   const updateMutation = useMutation(updateTodo, {
     onSuccess() {
       queryClient.invalidateQueries(['todoList']);
+      success('Todo가 update되었습니다!');
       refetch();
       setUpdateMode(false);
     },

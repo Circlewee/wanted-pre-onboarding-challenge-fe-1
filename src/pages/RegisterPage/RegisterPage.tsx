@@ -1,48 +1,37 @@
-import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import * as SC from './RegisterPageStyle';
 import { registerRequest } from '@/lib/api';
-import { UserForm, AlertModal, Loading } from '@/components';
+import { UserForm, Loading } from '@/components';
 import { IRequestError, IUserRequestSuccess, IUserInfo } from '@/types/types';
+import useToast from '@/hooks/useToast';
 
 const RegisterPage = () => {
-  const [isShow, setShow] = useState(false);
-  const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const toast = useToast();
 
-  const { mutate, isLoading, isSuccess } = useMutation<
+  const { mutate, isLoading } = useMutation<
     IUserRequestSuccess,
     AxiosError<IRequestError>,
     IUserInfo
   >(registerRequest, {
-    onMutate: (variable) => {
-      console.log('onMutate', variable);
-    },
     onError: (error) => {
-      console.log('error', error);
       if (error.response) {
-        setMessage(error.response.data.details);
-        setShow(true);
+        toast.error(error.response.data.details);
+      } else {
+        toast.error('회원가입에 실패했습니다.');
       }
     },
     onSuccess: (response) => {
-      setMessage(response.message);
-      setShow(true);
+      toast.success(response.message);
+      navigate('/auth');
     },
   });
 
   function registerSubmit(data: IUserInfo) {
     mutate(data);
-  }
-
-  function handleConfirm() {
-    setShow(false);
-    if (isSuccess) {
-      navigate('/auth');
-    }
   }
 
   return (
@@ -52,7 +41,6 @@ const RegisterPage = () => {
         <UserForm onSubmit={registerSubmit} buttonText='회원가입' />
       </SC.Wrapper>
       {isLoading && <Loading />}
-      {isShow && <AlertModal message={message} handleConfirm={handleConfirm} />}
     </>
   );
 };
