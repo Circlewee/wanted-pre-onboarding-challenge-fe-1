@@ -26,7 +26,7 @@ const TodoList = () => {
       if (error.response) {
         toast.error(error.response.data.details);
       } else {
-        toast.error('Todo 등록을 실패했습니다.');
+        toast.error('Todo 등록 실패');
       }
     },
     onSuccess(response) {
@@ -44,7 +44,7 @@ const TodoList = () => {
       //     return { data: [response.data] };
       //   }
       // );
-      toast.success('Todo 등록을 성공했습니다!');
+      toast.success('Todo 등록 성공!');
       refetch();
       navigate(`/${response.data.id}`);
     },
@@ -55,11 +55,11 @@ const TodoList = () => {
       if (error.response) {
         toast.error(error.response.data.details);
       } else {
-        toast.error('Todo 삭제를 실패했습니다.');
+        toast.error('Todo 삭제 실패');
       }
     },
     onSuccess(data) {
-      toast.success('Todo 삭제를 성공했습니다!');
+      toast.success('Todo 삭제 성공!');
       refetch();
       if (data === params['*']) navigate('/');
     },

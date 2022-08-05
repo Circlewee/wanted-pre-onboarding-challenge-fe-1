@@ -22,7 +22,7 @@ const LoginPage = () => {
       if (error.response) {
         toast.error(error.response.data.details);
       } else {
-        toast.error('로그인에 실패했습니다.');
+        toast.error('로그인 실패');
       }
     },
     onSuccess: (response) => {

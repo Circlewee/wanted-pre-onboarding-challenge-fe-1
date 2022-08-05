@@ -21,7 +21,7 @@ const RegisterPage = () => {
       if (error.response) {
         toast.error(error.response.data.details);
       } else {
-        toast.error('회원가입에 실패했습니다.');
+        toast.error('회원가입 실패');
       }
     },
     onSuccess: (response) => {

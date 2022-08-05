@@ -22,7 +22,7 @@ const TodoDetail = () => {
   const updateMutation = useMutation(updateTodo, {
     onSuccess() {
       queryClient.invalidateQueries(['todoList']);
-      success('Todo가 update되었습니다!');
+      success('Todo update!');
       refetch();
       setUpdateMode(false);
     },
