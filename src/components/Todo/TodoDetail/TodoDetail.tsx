@@ -1,28 +1,44 @@
 import { useParams } from 'react-router-dom';
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { AxiosError } from 'axios';
 
 import * as SC from './TodoDetailStyle';
 import { updateTodo, getTodoById } from '@/lib/api';
 import getDateString from '@/lib/getDateString';
-import { IFormType } from '@/types/todoTypes';
+import { IFormType, ITodoResponse } from '@/types/todoTypes';
 import useToast from '@/hooks/useToast';
 import TodoForm from '../TodoForm/TodoForm';
+import { IRequestError } from '@/types/types';
 
 const TodoDetail = () => {
   const [updateMode, setUpdateMode] = useState(false);
   const { todoId } = useParams();
-  const { success } = useToast();
-
-  const { data, refetch } = useQuery(['todo'], () => {
-    return getTodoById(todoId);
-  });
-
+  const toast = useToast();
   const queryClient = useQueryClient();
-  const updateMutation = useMutation(updateTodo, {
+
+  const { data, refetch } = useQuery<ITodoResponse, AxiosError<IRequestError>, ITodoResponse>(
+    ['todo'],
+    (): Promise<ITodoResponse> => {
+      return getTodoById(todoId);
+    }
+  );
+
+  const updateMutation = useMutation<
+    ITodoResponse,
+    AxiosError<IRequestError>,
+    { id: string; todo: IFormType }
+  >(updateTodo, {
+    onError(error) {
+      if (error.response) {
+        toast.error(error.response.data.details);
+      } else {
+        toast.error('Todo 업데이트 실패');
+      }
+    },
     onSuccess() {
       queryClient.invalidateQueries(['todoList']);
-      success('Todo update!');
+      toast.success('Todo 업데이트 성공!');
       refetch();
       setUpdateMode(false);
     },
@@ -48,7 +64,14 @@ const TodoDetail = () => {
 
   return (
     <SC.Wrapper>
-      {!updateMode ? (
+      {updateMode ? (
+        <TodoForm
+          request={updateRequest}
+          title={'UPDATE TODO'}
+          default={data?.data}
+          cancelUpdate={cancelUpdate}
+        />
+      ) : (
         <>
           <div>
             <h2>{data?.data.title}</h2>
@@ -59,13 +82,6 @@ const TodoDetail = () => {
             <SC.Date>{getDateString(data?.data.createdAt)}</SC.Date>
           </div>
         </>
-      ) : (
-        <TodoForm
-          request={updateRequest}
-          title={'UPDATE TODO'}
-          default={data?.data}
-          cancelUpdate={cancelUpdate}
-        />
       )}
     </SC.Wrapper>
   );

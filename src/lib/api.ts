@@ -1,9 +1,9 @@
 import axios, { AxiosError } from 'axios';
+import { createBrowserHistory } from 'history';
 
 import { IUserRequestSuccess, IUserInfo, IRequestError } from '@/types/types';
 import { IFormType, ITodoListResponse, ITodoResponse } from '@/types/todoTypes';
 import useToast from '@/hooks/useToast';
-import { createBrowserHistory } from 'history';
 
 const customAxios = axios.create({
   baseURL: 'http://localhost:8080',
@@ -15,14 +15,16 @@ customAxios.interceptors.response.use(
     const toast = useToast();
     const history = createBrowserHistory();
     const message = error.response?.data.details;
-    if (message) {
-      if (message === 'Token is missing' || message === '로그인에 실패했습니다') {
-        toast.error(message);
-        history.push('/auth');
-      }
 
-      return Promise.reject(error);
+    if (message === 'Token is missing') {
+      toast.error(message);
+      history.push('/auth');
     }
+    // TODO: 존재하지 않는 TODO id로 접근 시 빈화면이 출력되는 오류 수정
+    if (message === 'todo를 찾는 도중 문제가 생겼습니다') {
+      window.location.href = '/';
+    }
+
     return Promise.reject(error);
   }
 );
