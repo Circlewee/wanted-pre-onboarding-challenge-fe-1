@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { AxiosError } from 'axios';
@@ -12,6 +12,7 @@ import useToast from '@/hooks/useToast';
 const LoginPage = () => {
   const navigate = useNavigate();
   const toast = useToast();
+  const queryClient = useQueryClient();
 
   const { mutate, isLoading } = useMutation<
     IUserRequestSuccess,
@@ -26,6 +27,7 @@ const LoginPage = () => {
       }
     },
     onSuccess: (response) => {
+      queryClient.clear();
       toast.success(response.message);
       navigate('/');
       localStorage.setItem('token', response.token);

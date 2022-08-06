@@ -77,8 +77,8 @@ const TodoList = () => {
     <SC.Wrapper>
       <div>
         <h2>TODO List</h2>
-        {data?.data.length !== 0 ? (
-          data?.data.map((todo) => {
+        {data && data.data.length !== 0 ? (
+          data.data.map((todo) => {
             return (
               <TodoSimple
                 key={todo.id}
