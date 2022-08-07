@@ -28,7 +28,13 @@ Todo를 CRUD할 수 있지만 거기에 React Query를 곁들인.
    이메일, 비밀번호 조건에 맞지 않으면 회원가입 불가능
    회원가입 성공시 '/auth'로 이동  
    ![register](https://user-images.githubusercontent.com/65718183/183086613-0bc10d0c-d2bb-4d9e-9c7a-09bb4f75b232.gif)
+   
+### 실행 방법
+```shell
+yarn install
 
+yarn dev
+```
 
 ### stack
 
