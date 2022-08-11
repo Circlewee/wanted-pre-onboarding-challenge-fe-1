@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form';
 
 import * as SC from './UserFormStyle';
-import { IUserInfo } from '@/types/authTypes';
+import { AuthData } from '@/types/authTypes';
 
 interface IFormProps {
   buttonText: string;
-  onSubmit: (data: IUserInfo) => void;
+  onSubmit: (data: AuthData) => void;
 }
 
 const UserForm = ({ buttonText, onSubmit }: IFormProps) => {
@@ -14,7 +14,7 @@ const UserForm = ({ buttonText, onSubmit }: IFormProps) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IUserInfo>({ mode: 'onChange' });
+  } = useForm<AuthData>({ mode: 'onChange' });
 
   return (
     <SC.Wrapper onSubmit={handleSubmit(onSubmit)}>

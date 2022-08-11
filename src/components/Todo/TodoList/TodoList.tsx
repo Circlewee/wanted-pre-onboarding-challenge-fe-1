@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import * as SC from './TodoListStyle';
 import { getTodoList, postTodo, deleteTodo } from '@/lib/api';
-import { IRequestError } from '@/types/authTypes';
+import { ErrorResponse } from '@/types/authTypes';
 import { TodoInput, TodoResponse } from '@/types/todoTypes';
 import TodoSimple from '../TodoSimple/TodoSimple';
 import TodoForm from '../TodoForm/TodoForm';
@@ -21,7 +21,7 @@ const TodoList = () => {
     suspense: true,
   });
 
-  const postMutation = useMutation<TodoResponse, AxiosError<IRequestError>, TodoInput>(postTodo, {
+  const postMutation = useMutation<TodoResponse, AxiosError<ErrorResponse>, TodoInput>(postTodo, {
     onError(error) {
       if (error.response) {
         toast.error(error.response.data.details);
@@ -50,7 +50,7 @@ const TodoList = () => {
     },
   });
 
-  const deleteMutation = useMutation<string, AxiosError<IRequestError>, string>(deleteTodo, {
+  const deleteMutation = useMutation<string, AxiosError<ErrorResponse>, string>(deleteTodo, {
     onError(error) {
       if (error.response) {
         toast.error(error.response.data.details);

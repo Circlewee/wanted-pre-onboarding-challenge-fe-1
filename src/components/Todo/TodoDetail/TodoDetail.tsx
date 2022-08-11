@@ -9,7 +9,7 @@ import getDateString from '@/lib/getDateString';
 import { TodoInput, TodoResponse } from '@/types/todoTypes';
 import useToast from '@/hooks/useToast';
 import TodoForm from '../TodoForm/TodoForm';
-import { IRequestError } from '';
+import { ErrorResponse } from '@/types/authTypes';
 
 const TodoDetail = () => {
   const [updateMode, setUpdateMode] = useState(false);
@@ -17,7 +17,7 @@ const TodoDetail = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
 
-  const { data, refetch } = useQuery<TodoResponse, AxiosError<IRequestError>, TodoResponse>(
+  const { data, refetch } = useQuery<TodoResponse, AxiosError<ErrorResponse>, TodoResponse>(
     ['todo'],
     (): Promise<TodoResponse> => {
       return getTodoById(todoId);
@@ -26,7 +26,7 @@ const TodoDetail = () => {
 
   const updateMutation = useMutation<
     TodoResponse,
-    AxiosError<IRequestError>,
+    AxiosError<ErrorResponse>,
     { id: string; todo: TodoInput }
   >(updateTodo, {
     onError(error) {

@@ -1,13 +1,13 @@
-export interface IUserInfo {
+export interface AuthData {
   email: string;
   password: string;
 }
 
-export interface IUserRequestSuccess {
+export interface AuthResponse {
   message: string;
   token: string;
 }
 
-export interface IRequestError {
+export interface ErrorResponse {
   details: string;
 }

@@ -6,7 +6,7 @@ import { AxiosError } from 'axios';
 import * as SC from './LoginPageStyle';
 import { UserForm, Loading } from '@/components';
 import { loginRequest } from '@/lib/api';
-import { IUserInfo, IUserRequestSuccess, IRequestError } from '@/types/authTypes';
+import { AuthData, AuthResponse, ErrorResponse } from '@/types/authTypes';
 import useToast from '@/hooks/useToast';
 
 const LoginPage = () => {
@@ -14,27 +14,26 @@ const LoginPage = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation<
-    IUserRequestSuccess,
-    AxiosError<IRequestError>,
-    IUserInfo
-  >(loginRequest, {
-    onError: (error) => {
-      if (error.response) {
-        toast.error(error.response.data.details);
-      } else {
-        toast.error('로그인 실패');
-      }
-    },
-    onSuccess: (response) => {
-      queryClient.clear();
-      toast.success(response.message);
-      navigate('/');
-      localStorage.setItem('token', response.token);
-    },
-  });
+  const { mutate, isLoading } = useMutation<AuthResponse, AxiosError<ErrorResponse>, AuthData>(
+    loginRequest,
+    {
+      onError: (error) => {
+        if (error.response) {
+          toast.error(error.response.data.details);
+        } else {
+          toast.error('로그인 실패');
+        }
+      },
+      onSuccess: (response) => {
+        queryClient.clear();
+        toast.success(response.message);
+        navigate('/');
+        localStorage.setItem('token', response.token);
+      },
+    }
+  );
 
-  function loginSubmit(data: IUserInfo) {
+  function loginSubmit(data: AuthData) {
     mutate(data);
   }
 

@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { createBrowserHistory } from 'history';
 
-import { IUserRequestSuccess, IUserInfo, IRequestError } from '@/types/authTypes';
+import { AuthResponse, AuthData, ErrorResponse } from '@/types/authTypes';
 import { TodoInput, TodoListResponse, TodoResponse } from '@/types/todoTypes';
 import useToast from '@/hooks/useToast';
 
@@ -11,7 +11,7 @@ const customAxios = axios.create({
 
 customAxios.interceptors.response.use(
   (response) => response,
-  (error: AxiosError<IRequestError>) => {
+  (error: AxiosError<ErrorResponse>) => {
     const toast = useToast();
     const history = createBrowserHistory();
     const message = error.response?.data.details;
@@ -29,14 +29,14 @@ customAxios.interceptors.response.use(
   }
 );
 
-export async function loginRequest(userInfo: IUserInfo): Promise<IUserRequestSuccess> {
-  const { data } = await customAxios.post<IUserRequestSuccess>('/users/login', userInfo);
+export async function loginRequest(userInfo: AuthData): Promise<AuthResponse> {
+  const { data } = await customAxios.post<AuthResponse>('/users/login', userInfo);
 
   return data;
 }
 
-export async function registerRequest(userInfo: IUserInfo): Promise<IUserRequestSuccess> {
-  const { data } = await customAxios.post<IUserRequestSuccess>('/users/create', userInfo);
+export async function registerRequest(userInfo: AuthData): Promise<AuthResponse> {
+  const { data } = await customAxios.post<AuthResponse>('/users/create', userInfo);
 
   return data;
 }
