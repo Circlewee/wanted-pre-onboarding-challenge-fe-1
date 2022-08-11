@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { createBrowserHistory } from 'history';
 
-import { IUserRequestSuccess, IUserInfo, IRequestError } from '@/types/types';
+import { IUserRequestSuccess, IUserInfo, IRequestError } from '@/types/authTypes';
 import { IFormType, ITodoListResponse, ITodoResponse } from '@/types/todoTypes';
 import useToast from '@/hooks/useToast';
 

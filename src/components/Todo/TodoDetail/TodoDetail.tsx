@@ -9,7 +9,7 @@ import getDateString from '@/lib/getDateString';
 import { IFormType, ITodoResponse } from '@/types/todoTypes';
 import useToast from '@/hooks/useToast';
 import TodoForm from '../TodoForm/TodoForm';
-import { IRequestError } from '@/types/types';
+import { IRequestError } from '';
 
 const TodoDetail = () => {
   const [updateMode, setUpdateMode] = useState(false);

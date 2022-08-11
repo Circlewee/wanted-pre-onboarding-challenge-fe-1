@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import * as SC from './RegisterPageStyle';
 import { registerRequest } from '@/lib/api';
 import { UserForm, Loading } from '@/components';
-import { IRequestError, IUserRequestSuccess, IUserInfo } from '@/types/types';
+import { IRequestError, IUserRequestSuccess, IUserInfo } from '@/types/authTypes';
 import useToast from '@/hooks/useToast';
 
 const RegisterPage = () => {

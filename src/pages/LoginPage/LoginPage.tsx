@@ -6,7 +6,7 @@ import { AxiosError } from 'axios';
 import * as SC from './LoginPageStyle';
 import { UserForm, Loading } from '@/components';
 import { loginRequest } from '@/lib/api';
-import { IUserInfo, IUserRequestSuccess, IRequestError } from '@/types/types';
+import { IUserInfo, IUserRequestSuccess, IRequestError } from '@/types/authTypes';
 import useToast from '@/hooks/useToast';
 
 const LoginPage = () => {

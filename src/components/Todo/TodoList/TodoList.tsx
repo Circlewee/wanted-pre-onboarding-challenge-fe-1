@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import * as SC from './TodoListStyle';
 import { getTodoList, postTodo, deleteTodo } from '@/lib/api';
-import { IRequestError } from '@/types/types';
+import { IRequestError } from '@/types/authTypes';
 import { IFormType, ITodoResponse } from '@/types/todoTypes';
 import TodoSimple from '../TodoSimple/TodoSimple';
 import TodoForm from '../TodoForm/TodoForm';

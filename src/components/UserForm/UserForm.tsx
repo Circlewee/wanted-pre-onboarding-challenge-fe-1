@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 
 import * as SC from './UserFormStyle';
-import { IUserInfo } from '@/types/types';
+import { IUserInfo } from '@/types/authTypes';
 
 interface IFormProps {
   buttonText: string;
