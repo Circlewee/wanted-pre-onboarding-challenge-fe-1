@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { createBrowserHistory } from 'history';
 
 import { IUserRequestSuccess, IUserInfo, IRequestError } from '@/types/authTypes';
-import { IFormType, ITodoListResponse, ITodoResponse } from '@/types/todoTypes';
+import { TodoInput, TodoListResponse, TodoResponse } from '@/types/todoTypes';
 import useToast from '@/hooks/useToast';
 
 const customAxios = axios.create({
@@ -41,9 +41,9 @@ export async function registerRequest(userInfo: IUserInfo): Promise<IUserRequest
   return data;
 }
 
-export async function getTodoList(): Promise<ITodoListResponse> {
+export async function getTodoList(): Promise<TodoListResponse> {
   const token = localStorage.getItem('token');
-  const { data } = await customAxios.get<ITodoListResponse>('/todos', {
+  const { data } = await customAxios.get<TodoListResponse>('/todos', {
     headers: {
       Authorization: token ?? '',
     },
@@ -52,13 +52,13 @@ export async function getTodoList(): Promise<ITodoListResponse> {
   return data;
 }
 
-export async function getTodoById(id: string | undefined): Promise<ITodoResponse> {
+export async function getTodoById(id: string | undefined): Promise<TodoResponse> {
   if (!id) {
     throw new Error('존재하지 않는 Todo입니다.');
   }
 
   const token = localStorage.getItem('token');
-  const { data } = await customAxios.get<ITodoResponse>(`/todos/${id}`, {
+  const { data } = await customAxios.get<TodoResponse>(`/todos/${id}`, {
     headers: {
       Authorization: token ?? '',
     },
@@ -67,9 +67,9 @@ export async function getTodoById(id: string | undefined): Promise<ITodoResponse
   return data;
 }
 
-export async function postTodo(todo: IFormType): Promise<ITodoResponse> {
+export async function postTodo(todo: TodoInput): Promise<TodoResponse> {
   const token = localStorage.getItem('token');
-  const { data } = await customAxios.post<ITodoResponse>('/todos', todo, {
+  const { data } = await customAxios.post<TodoResponse>('/todos', todo, {
     headers: {
       Authorization: token ?? '',
     },
@@ -83,10 +83,10 @@ export async function updateTodo({
   todo,
 }: {
   id: string;
-  todo: IFormType;
-}): Promise<ITodoResponse> {
+  todo: TodoInput;
+}): Promise<TodoResponse> {
   const token = localStorage.getItem('token');
-  const { data } = await customAxios.put<ITodoResponse>(`/todos/${id}`, todo, {
+  const { data } = await customAxios.put<TodoResponse>(`/todos/${id}`, todo, {
     headers: {
       Authorization: token ?? '',
     },

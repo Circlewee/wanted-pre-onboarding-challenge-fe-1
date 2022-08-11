@@ -1,18 +1,18 @@
-export interface IFormType {
+export interface TodoInput {
   title: string;
   content: string;
 }
 
-export interface ITodo extends IFormType {
+export interface TodoData extends TodoInput {
   id: string;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface ITodoResponse {
-  data: ITodo;
+export interface TodoResponse {
+  data: TodoData;
 }
 
-export interface ITodoListResponse {
-  data: ITodo[];
+export interface TodoListResponse {
+  data: TodoData[];
 }

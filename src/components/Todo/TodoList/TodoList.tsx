@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import * as SC from './TodoListStyle';
 import { getTodoList, postTodo, deleteTodo } from '@/lib/api';
 import { IRequestError } from '@/types/authTypes';
-import { IFormType, ITodoResponse } from '@/types/todoTypes';
+import { TodoInput, TodoResponse } from '@/types/todoTypes';
 import TodoSimple from '../TodoSimple/TodoSimple';
 import TodoForm from '../TodoForm/TodoForm';
 import useToast from '@/hooks/useToast';
@@ -21,7 +21,7 @@ const TodoList = () => {
     suspense: true,
   });
 
-  const postMutation = useMutation<ITodoResponse, AxiosError<IRequestError>, IFormType>(postTodo, {
+  const postMutation = useMutation<TodoResponse, AxiosError<IRequestError>, TodoInput>(postTodo, {
     onError(error) {
       if (error.response) {
         toast.error(error.response.data.details);
@@ -37,7 +37,7 @@ const TodoList = () => {
       // queryClient.invalidateQueries(['todoList']);
       // queryClient.setQueryData(
       //   ['todoList'],
-      //   (old: ITodoListResponse | undefined): ITodoListResponse => {
+      //   (old: TodoListResponse | undefined): TodoListResponse => {
       //     if (old) {
       //       return { data: [...old.data, response.data] };
       //     }
@@ -65,7 +65,7 @@ const TodoList = () => {
     },
   });
 
-  function postRequest(data: IFormType) {
+  function postRequest(data: TodoInput) {
     postMutation.mutate(data);
   }
 

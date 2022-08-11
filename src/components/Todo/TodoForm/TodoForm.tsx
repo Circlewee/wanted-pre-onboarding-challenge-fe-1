@@ -1,19 +1,19 @@
 import { useForm } from 'react-hook-form';
 
-import { ITodo, IFormType } from '@/types/todoTypes';
+import { TodoData, TodoInput } from '@/types/todoTypes';
 import * as SC from './TodoFormStyle';
 
 interface IFormProps {
-  request: (data: IFormType, id?: string) => void;
+  request: (data: TodoInput, id?: string) => void;
   title: string;
-  default?: ITodo;
+  default?: TodoData;
   cancelUpdate?: () => void;
 }
 
 const TodoForm = (props: IFormProps) => {
-  const { register, handleSubmit, reset } = useForm<ITodo>({ mode: 'onChange' });
+  const { register, handleSubmit, reset } = useForm<TodoData>({ mode: 'onChange' });
 
-  function onSubmit(data: IFormType) {
+  function onSubmit(data: TodoInput) {
     if (props.default) {
       props.request(data, props.default.id);
     }

@@ -2,15 +2,15 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import * as SC from './TodoSimpleStyle';
-import { ITodo } from '@/types/todoTypes';
+import { TodoData } from '@/types/todoTypes';
 
-interface ITodoSimpleProps {
-  todo: ITodo;
+interface TodoDataSimpleProps {
+  todo: TodoData;
   active: boolean;
   deleteRequest: (id: string) => void;
 }
 
-const TodoSimple = ({ todo, active, deleteRequest }: ITodoSimpleProps) => {
+const TodoSimple = ({ todo, active, deleteRequest }: TodoDataSimpleProps) => {
   const navigate = useNavigate();
   const [isDone, setIsDone] = useState(false);
 

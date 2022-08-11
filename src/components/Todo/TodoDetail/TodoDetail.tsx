@@ -6,7 +6,7 @@ import { AxiosError } from 'axios';
 import * as SC from './TodoDetailStyle';
 import { updateTodo, getTodoById } from '@/lib/api';
 import getDateString from '@/lib/getDateString';
-import { IFormType, ITodoResponse } from '@/types/todoTypes';
+import { TodoInput, TodoResponse } from '@/types/todoTypes';
 import useToast from '@/hooks/useToast';
 import TodoForm from '../TodoForm/TodoForm';
 import { IRequestError } from '';
@@ -17,17 +17,17 @@ const TodoDetail = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
 
-  const { data, refetch } = useQuery<ITodoResponse, AxiosError<IRequestError>, ITodoResponse>(
+  const { data, refetch } = useQuery<TodoResponse, AxiosError<IRequestError>, TodoResponse>(
     ['todo'],
-    (): Promise<ITodoResponse> => {
+    (): Promise<TodoResponse> => {
       return getTodoById(todoId);
     }
   );
 
   const updateMutation = useMutation<
-    ITodoResponse,
+    TodoResponse,
     AxiosError<IRequestError>,
-    { id: string; todo: IFormType }
+    { id: string; todo: TodoInput }
   >(updateTodo, {
     onError(error) {
       if (error.response) {
@@ -48,7 +48,7 @@ const TodoDetail = () => {
     setUpdateMode(true);
   }
 
-  function updateRequest(data: IFormType, id?: string) {
+  function updateRequest(data: TodoInput, id?: string) {
     if (id) {
       updateMutation.mutate({ id, todo: data });
     }
