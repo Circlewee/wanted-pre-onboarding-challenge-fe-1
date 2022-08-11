@@ -1,6 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-
 import * as SC from './TodoSimpleStyle';
 import { TodoData } from '@/types/todoTypes';
 
@@ -12,7 +10,6 @@ interface Props {
 
 const TodoSimple = ({ todo, active, deleteRequest }: Props) => {
   const navigate = useNavigate();
-  const [isDone, setIsDone] = useState(false);
 
   function handleDelete() {
     deleteRequest(todo.id);
@@ -24,14 +21,9 @@ const TodoSimple = ({ todo, active, deleteRequest }: Props) => {
     }
   }
 
-  function handleChange() {
-    setIsDone((prev) => !prev);
-  }
-
   return (
     <SC.Wrapper>
-      <input type='checkbox' onChange={handleChange} />
-      <SC.Todo onClick={goDetail} active={active} isDone={isDone}>
+      <SC.Todo onClick={goDetail} active={active}>
         {todo.title}: {todo.content}
       </SC.Todo>
       <button onClick={handleDelete}>❌</button>
