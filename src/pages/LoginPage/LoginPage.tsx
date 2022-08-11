@@ -1,41 +1,25 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { AxiosError } from 'axios';
 
 import * as SC from './LoginPageStyle';
 import { UserForm, Loading } from '@/components';
-import { loginRequest } from '@/lib/api';
-import { AuthData, AuthResponse, ErrorResponse } from '@/types/authTypes';
-import useToast from '@/hooks/useToast';
+import useAuth from '@/hooks/useAuth';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-  const toast = useToast();
-  const queryClient = useQueryClient();
-
-  const { mutate, isLoading } = useMutation<AuthResponse, AxiosError<ErrorResponse>, AuthData>(
-    loginRequest,
-    {
-      onError: (error) => {
-        if (error.response) {
-          toast.error(error.response.data.details);
-        } else {
-          toast.error('로그인 실패');
-        }
-      },
-      onSuccess: (response) => {
-        queryClient.clear();
-        toast.success(response.message);
-        navigate('/');
-        localStorage.setItem('token', response.token);
-      },
-    }
-  );
-
-  function loginSubmit(data: AuthData) {
-    mutate(data);
-  }
+  const { authMutation, toast, queryClient, navigate, submitAction } = useAuth('/users/create', {
+    onError: (error) => {
+      if (error.response) {
+        toast.error(error.response.data.details);
+      } else {
+        toast.error('로그인 실패');
+      }
+    },
+    onSuccess: (response) => {
+      queryClient.clear();
+      toast.success(response.message);
+      navigate('/');
+      localStorage.setItem('token', response.token);
+    },
+  });
 
   function goRegister() {
     navigate('/register');
@@ -52,10 +36,10 @@ const LoginPage = () => {
     <>
       <SC.Wrapper>
         <SC.Title>로그인</SC.Title>
-        <UserForm onSubmit={loginSubmit} buttonText='로그인' />
+        <UserForm onSubmit={submitAction} buttonText='로그인' />
         <SC.RegisterButton onClick={goRegister}>회원가입</SC.RegisterButton>
       </SC.Wrapper>
-      {isLoading && <Loading />}
+      {authMutation.isLoading && <Loading />}
     </>
   );
 };

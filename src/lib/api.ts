@@ -29,17 +29,13 @@ customAxios.interceptors.response.use(
   }
 );
 
-export async function loginRequest(userInfo: AuthData): Promise<AuthResponse> {
-  const { data } = await customAxios.post<AuthResponse>('/users/login', userInfo);
+export const authRequest = (endPoint: string) => {
+  return async (userInfo: AuthData): Promise<AuthResponse> => {
+    const { data } = await customAxios.post<AuthResponse>(endPoint, userInfo);
 
-  return data;
-}
-
-export async function registerRequest(userInfo: AuthData): Promise<AuthResponse> {
-  const { data } = await customAxios.post<AuthResponse>('/users/create', userInfo);
-
-  return data;
-}
+    return data;
+  };
+};
 
 export async function getTodoList(): Promise<TodoListResponse> {
   const token = localStorage.getItem('token');

@@ -11,3 +11,5 @@ export interface AuthResponse {
 export interface ErrorResponse {
   details: string;
 }
+
+export type AuthRequest = (userInfo: AuthData) => Promise<AuthResponse>;
