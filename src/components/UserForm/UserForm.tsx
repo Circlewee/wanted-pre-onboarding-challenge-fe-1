@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form';
 import * as SC from './UserFormStyle';
 import { AuthData } from '@/types/authTypes';
 
-interface IFormProps {
+interface Props {
   buttonText: string;
   onSubmit: (data: AuthData) => void;
 }
 
-const UserForm = ({ buttonText, onSubmit }: IFormProps) => {
+const UserForm = ({ buttonText, onSubmit }: Props) => {
   const {
     register,
     handleSubmit,

@@ -3,14 +3,14 @@ import { useForm } from 'react-hook-form';
 import { TodoData, TodoInput } from '@/types/todoTypes';
 import * as SC from './TodoFormStyle';
 
-interface IFormProps {
+interface Props {
   request: (data: TodoInput, id?: string) => void;
   title: string;
   default?: TodoData;
   cancelUpdate?: () => void;
 }
 
-const TodoForm = (props: IFormProps) => {
+const TodoForm = (props: Props) => {
   const { register, handleSubmit, reset } = useForm<TodoData>({ mode: 'onChange' });
 
   function onSubmit(data: TodoInput) {

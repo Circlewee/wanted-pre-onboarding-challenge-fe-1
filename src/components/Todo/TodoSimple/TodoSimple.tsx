@@ -4,13 +4,13 @@ import { useState } from 'react';
 import * as SC from './TodoSimpleStyle';
 import { TodoData } from '@/types/todoTypes';
 
-interface TodoDataSimpleProps {
+interface Props {
   todo: TodoData;
   active: boolean;
   deleteRequest: (id: string) => void;
 }
 
-const TodoSimple = ({ todo, active, deleteRequest }: TodoDataSimpleProps) => {
+const TodoSimple = ({ todo, active, deleteRequest }: Props) => {
   const navigate = useNavigate();
   const [isDone, setIsDone] = useState(false);
 
