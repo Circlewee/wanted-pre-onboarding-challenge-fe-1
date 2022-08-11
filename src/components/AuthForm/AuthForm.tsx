@@ -1,23 +1,22 @@
 import { useForm } from 'react-hook-form';
 
-import * as SC from './UserFormStyle';
+import * as SC from './AuthFormStyle';
 import { AuthData } from '@/types/authTypes';
 
 interface Props {
   buttonText: string;
-  onSubmit: (data: AuthData) => void;
+  submitAction: (data: AuthData) => void;
 }
 
-const UserForm = ({ buttonText, onSubmit }: Props) => {
+const AuthForm = ({ buttonText, submitAction }: Props) => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<AuthData>({ mode: 'onChange' });
 
   return (
-    <SC.Wrapper onSubmit={handleSubmit(onSubmit)}>
+    <SC.Wrapper onSubmit={handleSubmit(submitAction)}>
       <SC.InputWrapper>
         <SC.Label htmlFor='emailInput'>Email</SC.Label>
         <SC.Input
@@ -58,4 +57,4 @@ const UserForm = ({ buttonText, onSubmit }: Props) => {
   );
 };
 
-export default UserForm;
+export default AuthForm;

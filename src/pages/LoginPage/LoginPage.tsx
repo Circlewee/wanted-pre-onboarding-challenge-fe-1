@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import * as SC from './LoginPageStyle';
-import { UserForm, Loading } from '@/components';
+import { AuthForm, Loading } from '@/components';
 import useAuth from '@/hooks/useAuth';
 
 const LoginPage = () => {
@@ -36,7 +36,7 @@ const LoginPage = () => {
     <>
       <SC.Wrapper>
         <SC.Title>로그인</SC.Title>
-        <UserForm onSubmit={submitAction} buttonText='로그인' />
+        <AuthForm submitAction={submitAction} buttonText='로그인' />
         <SC.RegisterButton onClick={goRegister}>회원가입</SC.RegisterButton>
       </SC.Wrapper>
       {authMutation.isLoading && <Loading />}

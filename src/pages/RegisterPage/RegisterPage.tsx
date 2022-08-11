@@ -1,5 +1,5 @@
 import * as SC from './RegisterPageStyle';
-import { UserForm, Loading } from '@/components';
+import { AuthForm, Loading } from '@/components';
 import useAuth from '@/hooks/useAuth';
 
 const RegisterPage = () => {
@@ -21,7 +21,7 @@ const RegisterPage = () => {
     <>
       <SC.Wrapper>
         <SC.Title>회원가입</SC.Title>
-        <UserForm onSubmit={submitAction} buttonText='회원가입' />
+        <AuthForm submitAction={submitAction} buttonText='회원가입' />
       </SC.Wrapper>
       {authMutation.isLoading && <Loading />}
     </>
