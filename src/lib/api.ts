@@ -37,7 +37,7 @@ export const authRequest = (endPoint: string) => {
   };
 };
 
-export async function getTodoList(): Promise<TodoListResponse> {
+export const getTodoList = async (): Promise<TodoListResponse> => {
   const token = localStorage.getItem('token');
   const { data } = await customAxios.get<TodoListResponse>('/todos', {
     headers: {
@@ -46,9 +46,9 @@ export async function getTodoList(): Promise<TodoListResponse> {
   });
 
   return data;
-}
+};
 
-export async function getTodoById(id: string | undefined): Promise<TodoResponse> {
+export const getTodoById = async (id: string | undefined): Promise<TodoResponse> => {
   if (!id) {
     throw new Error('존재하지 않는 Todo입니다.');
   }
@@ -61,9 +61,9 @@ export async function getTodoById(id: string | undefined): Promise<TodoResponse>
   });
 
   return data;
-}
+};
 
-export async function postTodo(todo: TodoInput): Promise<TodoResponse> {
+export const postTodo = async (todo: TodoInput): Promise<TodoResponse> => {
   const token = localStorage.getItem('token');
   const { data } = await customAxios.post<TodoResponse>('/todos', todo, {
     headers: {
@@ -72,15 +72,15 @@ export async function postTodo(todo: TodoInput): Promise<TodoResponse> {
   });
 
   return data;
-}
+};
 
-export async function updateTodo({
+export const updateTodo = async ({
   id,
   todo,
 }: {
   id: string;
   todo: TodoInput;
-}): Promise<TodoResponse> {
+}): Promise<TodoResponse> => {
   const token = localStorage.getItem('token');
   const { data } = await customAxios.put<TodoResponse>(`/todos/${id}`, todo, {
     headers: {
@@ -89,9 +89,9 @@ export async function updateTodo({
   });
 
   return data;
-}
+};
 
-export async function deleteTodo(id: string): Promise<string> {
+export const deleteTodo = async (id: string): Promise<string> => {
   const token = localStorage.getItem('token');
   await customAxios.delete(`/todos/${id}`, {
     headers: {
@@ -100,6 +100,6 @@ export async function deleteTodo(id: string): Promise<string> {
   });
 
   return id;
-}
+};
 
 export default customAxios;
