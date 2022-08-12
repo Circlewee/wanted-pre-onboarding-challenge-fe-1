@@ -23,9 +23,12 @@ const TodoDetail = () => {
   const { data, refetch, isLoading, isFetching } = useQuery<
     TodoResponse,
     AxiosError<ErrorResponse>
-  >(['todo'], (): Promise<TodoResponse> => {
-    return getTodoById(todoId);
-  });
+  >(['todo'], wrapper);
+
+  async function wrapper() {
+    const data = await getTodoById(todoId);
+    return data;
+  }
 
   const updateMutation = useMutation<
     TodoResponse,
