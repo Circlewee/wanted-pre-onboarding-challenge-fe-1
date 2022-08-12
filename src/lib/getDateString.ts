@@ -1,4 +1,8 @@
-function getDateString(date: string | undefined): string {
+const getPadString = (target: string | number): string => {
+  return String(target).padStart(2, '0');
+};
+
+const getDateString = (date: string | undefined): string => {
   if (!date) {
     return '날짜 정보가 존재하지 않습니다.';
   }
@@ -10,10 +14,6 @@ function getDateString(date: string | undefined): string {
   )}.${getPadString(dateObject.getDate())} ${getPadString(dateObject.getHours())}:${getPadString(
     dateObject.getMinutes()
   )}:${getPadString(dateObject.getSeconds())}`;
-}
-
-function getPadString(target: string | number): string {
-  return String(target).padStart(2, '0');
-}
+};
 
 export default getDateString;

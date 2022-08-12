@@ -6,9 +6,9 @@ import { Todo } from '@/components';
 const TodoPage = () => {
   const navigate = useNavigate();
 
-  function goHome() {
+  const goHome = () => {
     navigate('/');
-  }
+  };
 
   return (
     <div>

@@ -19,9 +19,9 @@ const LoginPage = () => {
     },
   });
 
-  function goRegister() {
+  const goRegister = () => {
     navigate('/auth/signup');
-  }
+  };
 
   return (
     <>

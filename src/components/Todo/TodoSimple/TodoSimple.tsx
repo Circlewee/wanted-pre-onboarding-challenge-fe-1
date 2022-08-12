@@ -11,15 +11,15 @@ interface Props {
 const TodoSimple = ({ todo, active, deleteRequest }: Props) => {
   const navigate = useNavigate();
 
-  function handleDelete() {
+  const handleDelete = () => {
     deleteRequest(todo.id);
-  }
+  };
 
-  function goDetail() {
+  const goDetail = () => {
     if (!active) {
       navigate(`/${todo.id}`);
     }
-  }
+  };
 
   return (
     <SC.Wrapper>

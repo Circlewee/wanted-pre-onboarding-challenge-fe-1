@@ -23,12 +23,9 @@ const TodoDetail = () => {
   const { data, refetch, isLoading, isFetching } = useQuery<
     TodoResponse,
     AxiosError<ErrorResponse>
-  >(['todo'], wrapper);
-
-  async function wrapper() {
-    const data = await getTodoById(todoId);
-    return data;
-  }
+  >(['todo'], () => {
+    return getTodoById(todoId);
+  });
 
   const updateMutation = useMutation<
     TodoResponse,
@@ -50,19 +47,19 @@ const TodoDetail = () => {
     },
   });
 
-  function setMode() {
+  const setMode = () => {
     setUpdateMode(true);
-  }
+  };
 
-  function updateRequest(data: TodoInput, id?: string) {
+  const updateRequest = (data: TodoInput, id?: string) => {
     if (id) {
       updateMutation.mutate({ id, todo: data });
     }
-  }
+  };
 
-  function cancelUpdate() {
+  const cancelUpdate = () => {
     setUpdateMode(false);
-  }
+  };
 
   useEffect(() => {
     refetch();

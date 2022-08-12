@@ -69,13 +69,13 @@ const TodoList = () => {
     },
   });
 
-  function postRequest(data: TodoInput) {
+  const postRequest = (data: TodoInput) => {
     postMutation.mutate(data);
-  }
+  };
 
-  function deleteRequest(id: string) {
+  const deleteRequest = (id: string) => {
     deleteMutation.mutate(id);
-  }
+  };
 
   useEffect(() => {
     setQueryState({ isLoading, isFetching });

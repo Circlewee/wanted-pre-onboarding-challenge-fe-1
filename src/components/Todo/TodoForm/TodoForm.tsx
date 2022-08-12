@@ -13,13 +13,13 @@ interface Props {
 const TodoForm = (props: Props) => {
   const { register, handleSubmit, reset } = useForm<TodoData>({ mode: 'onChange' });
 
-  function onSubmit(data: TodoInput) {
+  const onSubmit = (data: TodoInput) => {
     if (props.default) {
       props.request(data, props.default.id);
     }
     props.request(data);
     reset({ title: '', content: '' });
-  }
+  };
 
   return (
     <SC.Form onSubmit={handleSubmit(onSubmit)}>
