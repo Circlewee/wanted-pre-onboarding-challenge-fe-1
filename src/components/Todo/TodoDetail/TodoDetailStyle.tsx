@@ -19,6 +19,6 @@ export const UpdateButton = styled.button`
   font-size: 1.2rem;
 `;
 
-export const Date = styled.p`
+export const Date = styled.div`
   margin: 0;
 `;

@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import * as SC from './TodoListStyle';
 import { getTodoList, postTodo, deleteTodo } from '@/lib/api';
@@ -9,16 +10,17 @@ import { TodoInput, TodoResponse } from '@/types/todoTypes';
 import TodoSimple from '../TodoSimple/TodoSimple';
 import TodoForm from '../TodoForm/TodoForm';
 import useToast from '@/hooks/useToast';
+import Skeleton from '@/components/Skeleton/Skeleton';
+import useSkeleton from '@/hooks/useSkeleton';
 
 const TodoList = () => {
   const navigate = useNavigate();
   const params = useParams();
   const toast = useToast();
+  const { isVisible, setQueryState } = useSkeleton();
 
-  // const queryClient = useQueryClient();
-  const { data, refetch } = useQuery(['todoList'], getTodoList, {
+  const { data, refetch, isLoading, isFetching } = useQuery(['todoList'], getTodoList, {
     staleTime: 5000,
-    suspense: true,
   });
 
   const postMutation = useMutation<TodoResponse, AxiosError<ErrorResponse>, TodoInput>(postTodo, {
@@ -73,11 +75,17 @@ const TodoList = () => {
     deleteMutation.mutate(id);
   }
 
+  useEffect(() => {
+    setQueryState({ isLoading, isFetching });
+  }, [isLoading, isFetching]);
+
   return (
     <SC.Wrapper>
       <div>
         <h2>TODO List</h2>
-        {data && data.data.length !== 0 ? (
+        {!isVisible ? (
+          <Skeleton width={15} height={1.5} amount={4} />
+        ) : data && data.data.length !== 0 ? (
           data.data.map((todo) => {
             return (
               <TodoSimple

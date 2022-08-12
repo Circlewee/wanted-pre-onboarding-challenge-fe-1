@@ -10,19 +10,22 @@ import { TodoInput, TodoResponse } from '@/types/todoTypes';
 import useToast from '@/hooks/useToast';
 import TodoForm from '../TodoForm/TodoForm';
 import { ErrorResponse } from '@/types/authTypes';
+import Skeleton from '@/components/Skeleton/Skeleton';
+import useSkeleton from '@/hooks/useSkeleton';
 
 const TodoDetail = () => {
   const [updateMode, setUpdateMode] = useState(false);
   const { todoId } = useParams();
   const toast = useToast();
   const queryClient = useQueryClient();
+  const { isVisible, setQueryState } = useSkeleton();
 
-  const { data, refetch } = useQuery<TodoResponse, AxiosError<ErrorResponse>, TodoResponse>(
-    ['todo'],
-    (): Promise<TodoResponse> => {
-      return getTodoById(todoId);
-    }
-  );
+  const { data, refetch, isLoading, isFetching } = useQuery<
+    TodoResponse,
+    AxiosError<ErrorResponse>
+  >(['todo'], (): Promise<TodoResponse> => {
+    return getTodoById(todoId);
+  });
 
   const updateMutation = useMutation<
     TodoResponse,
@@ -62,16 +65,26 @@ const TodoDetail = () => {
     refetch();
   }, [todoId]);
 
-  return (
-    <SC.Wrapper>
-      {updateMode ? (
+  useEffect(() => {
+    setQueryState({ isLoading, isFetching });
+  }, [isLoading, isFetching]);
+
+  if (updateMode) {
+    return (
+      <SC.Wrapper>
         <TodoForm
           request={updateRequest}
           title={'UPDATE TODO'}
           default={data?.data}
           cancelUpdate={cancelUpdate}
         />
-      ) : (
+      </SC.Wrapper>
+    );
+  }
+
+  return (
+    <SC.Wrapper>
+      {isVisible ? (
         <>
           <div>
             <h2>{data?.data.title}</h2>
@@ -80,6 +93,23 @@ const TodoDetail = () => {
           <div>
             <SC.TodoContent>{data?.data.content}</SC.TodoContent>
             <SC.Date>{getDateString(data?.data.createdAt)}</SC.Date>
+          </div>
+        </>
+      ) : (
+        <>
+          <div>
+            <h2>
+              <Skeleton width={15} height={1.5} />
+            </h2>
+            <SC.UpdateButton>📝</SC.UpdateButton>
+          </div>
+          <div>
+            <SC.TodoContent>
+              <Skeleton width={20} height={1.5} />
+            </SC.TodoContent>
+            <SC.Date>
+              <Skeleton width={10} height={1.5} />
+            </SC.Date>
           </div>
         </>
       )}
