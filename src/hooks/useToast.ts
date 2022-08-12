@@ -1,8 +1,8 @@
-import { toast, ToastPosition } from 'react-toastify';
+import { toast, ToastOptions } from 'react-toastify';
 
 const useToast = () => {
-  const option = {
-    position: 'top-center' as ToastPosition,
+  const option: ToastOptions = {
+    position: 'top-center',
     autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
@@ -11,13 +11,13 @@ const useToast = () => {
     progress: undefined,
   };
 
-  function success(message: string) {
-    return toast.success(message, option);
-  }
+  const success = (message: string) => {
+    toast.success(message, option);
+  };
 
-  function error(message: string) {
-    return toast.error(message, option);
-  }
+  const error = (message: string) => {
+    toast.error(message, option);
+  };
 
   return { success, error };
 };
