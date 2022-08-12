@@ -1,17 +1,16 @@
 import { useParams } from 'react-router-dom';
-import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { AxiosError } from 'axios';
 
 import * as SC from './TodoDetailStyle';
-import { updateTodo, getTodoById } from '@/lib/api';
 import getDateString from '@/lib/getDateString';
-import { TodoInput, TodoResponse } from '@/types/todoTypes';
+import { TodoInput } from '@/types/todoTypes';
 import useToast from '@/hooks/useToast';
 import TodoForm from '../TodoForm/TodoForm';
-import { ErrorResponse } from '@/types/authTypes';
 import Skeleton from '@/components/Skeleton/Skeleton';
 import useSkeleton from '@/hooks/useSkeleton';
+import useGetTodoById from '@/hooks/useGetTodoById';
+import useUpdateMutation from '@/hooks/useUpdateMutation';
 
 const TodoDetail = () => {
   const [updateMode, setUpdateMode] = useState(false);
@@ -20,18 +19,9 @@ const TodoDetail = () => {
   const queryClient = useQueryClient();
   const { isVisible, setQueryState } = useSkeleton();
 
-  const { data, refetch, isLoading, isFetching } = useQuery<
-    TodoResponse,
-    AxiosError<ErrorResponse>
-  >(['todo'], () => {
-    return getTodoById(todoId);
-  });
+  const { data, refetch, isLoading, isFetching } = useGetTodoById(todoId);
 
-  const updateMutation = useMutation<
-    TodoResponse,
-    AxiosError<ErrorResponse>,
-    { id: string; todo: TodoInput }
-  >(updateTodo, {
+  const updateMutation = useUpdateMutation({
     onError(error) {
       if (error.response) {
         toast.error(error.response.data.details);
@@ -48,17 +38,13 @@ const TodoDetail = () => {
   });
 
   const setMode = () => {
-    setUpdateMode(true);
+    setUpdateMode((prevState) => !prevState);
   };
 
   const updateRequest = (data: TodoInput, id?: string) => {
     if (id) {
       updateMutation.mutate({ id, todo: data });
     }
-  };
-
-  const cancelUpdate = () => {
-    setUpdateMode(false);
   };
 
   useEffect(() => {
@@ -76,7 +62,7 @@ const TodoDetail = () => {
           request={updateRequest}
           title={'UPDATE TODO'}
           default={data?.data}
-          cancelUpdate={cancelUpdate}
+          cancelUpdate={setMode}
         />
       </SC.Wrapper>
     );
