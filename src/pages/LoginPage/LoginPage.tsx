@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
-
 import * as SC from './LoginPageStyle';
 import { AuthForm, Loading } from '@/components';
 import useAuth from '@/hooks/useAuth';
 
 const LoginPage = () => {
-  const { authMutation, toast, queryClient, navigate, submitAction } = useAuth('/users/create', {
+  const { authMutation, toast, queryClient, navigate, submitAction } = useAuth('/users/login', {
     onError: (error) => {
       if (error.response) {
         toast.error(error.response.data.details);
@@ -22,15 +20,8 @@ const LoginPage = () => {
   });
 
   function goRegister() {
-    navigate('/register');
+    navigate('/auth/signup');
   }
-
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      toast.success('이미 로그인이 되어있습니다.');
-      navigate('/');
-    }
-  }, []);
 
   return (
     <>

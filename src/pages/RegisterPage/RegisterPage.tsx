@@ -3,7 +3,7 @@ import { AuthForm, Loading } from '@/components';
 import useAuth from '@/hooks/useAuth';
 
 const RegisterPage = () => {
-  const { authMutation, toast, navigate, submitAction } = useAuth('/users/login', {
+  const { authMutation, toast, navigate, submitAction } = useAuth('/users/create', {
     onError: (error) => {
       if (error.response) {
         toast.error(error.response.data.details);
@@ -13,7 +13,7 @@ const RegisterPage = () => {
     },
     onSuccess: (response) => {
       toast.success(response.message);
-      navigate('/auth');
+      navigate('/auth/signin');
     },
   });
 

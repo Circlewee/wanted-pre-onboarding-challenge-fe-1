@@ -108,7 +108,7 @@ const TodoDetail = () => {
           </div>
           <div>
             <SC.TodoContent>
-              <Skeleton width={20} height={1.5} />
+              <Skeleton width={15} height={1.5} />
             </SC.TodoContent>
             <SC.Date>
               <Skeleton width={10} height={1.5} />

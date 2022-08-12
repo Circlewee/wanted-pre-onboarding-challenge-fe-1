@@ -18,7 +18,7 @@ customAxios.interceptors.response.use(
 
     if (message === 'Token is missing') {
       toast.error(message);
-      history.push('/auth');
+      history.push('/auth/signin');
     }
     // TODO: 존재하지 않는 TODO id로 접근 시 빈화면이 출력되는 오류 수정
     if (message === 'todo를 찾는 도중 문제가 생겼습니다') {

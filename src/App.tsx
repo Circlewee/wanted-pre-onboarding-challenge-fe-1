@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Suspense } from 'react';
 
 import { Todo } from '@/components';
-import { LoginPage, RegisterPage, TodoPage } from './pages';
+import { LoginPage, RegisterPage, TodoPage, Auth } from './pages';
 import Skeleton from './components/Skeleton/Skeleton';
 
 const PageWrapper = styled.div`
@@ -30,8 +30,10 @@ const App = () => {
               }
             />
           </Route>
-          <Route path='/auth' element={<LoginPage />} />
-          <Route path='/register' element={<RegisterPage />} />
+          <Route path='/auth' element={<Auth />}>
+            <Route path='signin' element={<LoginPage />} />
+            <Route path='signup' element={<RegisterPage />} />
+          </Route>
           <Route path='*' element={<div>404 NOT FOUND!</div>} />
         </Routes>
       </PageWrapper>
