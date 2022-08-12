@@ -15,7 +15,7 @@ import useSkeleton from '@/hooks/useSkeleton';
 
 const TodoList = () => {
   const navigate = useNavigate();
-  const params = useParams();
+  const { todoId } = useParams();
   const toast = useToast();
   const { isVisible, setQueryState } = useSkeleton();
 
@@ -63,7 +63,9 @@ const TodoList = () => {
     onSuccess(data) {
       toast.success('Todo 삭제 성공!');
       refetch();
-      if (data === params['*']) navigate('/');
+      if (data === todoId) {
+        navigate('/');
+      }
     },
   });
 
@@ -91,7 +93,7 @@ const TodoList = () => {
               <TodoSimple
                 key={todo.id}
                 todo={todo}
-                active={params['*'] === todo.id}
+                active={todoId === todo.id}
                 deleteRequest={deleteRequest}
               />
             );
